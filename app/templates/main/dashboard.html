@@ -1,10 +1,55 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2 class="mb-4">Dashboard</h2>
-<div class="row g-3">
-  <div class="col-md-3"><div class="card shadow-sm"><div class="card-body"><h5>Classes</h5><div class="fs-3">{{ counts.classes }}</div></div></div></div>
-  <div class="col-md-3"><div class="card shadow-sm"><div class="card-body"><h5>Students</h5><div class="fs-3">{{ counts.students }}</div></div></div></div>
-  <div class="col-md-3"><div class="card shadow-sm"><div class="card-body"><h5>Subjects</h5><div class="fs-3">{{ counts.subjects }}</div></div></div></div>
-  <div class="col-md-3"><div class="card shadow-sm"><div class="card-body"><h5>Scores</h5><div class="fs-3">{{ counts.scores }}</div></div></div></div>
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+  <div>
+    <h2 class="mb-1">Dashboard</h2>
+    <p class="text-muted mb-0">{{ settings.school_name }}</p>
+  </div>
+</div>
+<div class="row g-3 mb-4">
+  <div class="col-md-2"><div class="metric-card"><div class="metric-label">Classes</div><div class="metric-value">{{ counts.classes }}</div></div></div>
+  <div class="col-md-2"><div class="metric-card"><div class="metric-label">Students</div><div class="metric-value">{{ counts.students }}</div></div></div>
+  <div class="col-md-2"><div class="metric-card"><div class="metric-label">Subjects</div><div class="metric-value">{{ counts.subjects }}</div></div></div>
+  <div class="col-md-2"><div class="metric-card"><div class="metric-label">Scores</div><div class="metric-value">{{ counts.scores }}</div></div></div>
+  <div class="col-md-2"><div class="metric-card"><div class="metric-label">Reports</div><div class="metric-value">{{ counts.reports }}</div></div></div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-4">
+        <h5 class="mb-3">Recent Report Cards</h5>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead class="table-light">
+              <tr><th>Student</th><th>Term</th><th>Year</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              {% for r in recent_reports %}
+              <tr>
+                <td>{{ r.student.first_name }} {{ r.student.last_name }}</td>
+                <td>{{ r.term }}</td>
+                <td>{{ r.academic_year }}</td>
+                <td><span class="badge text-bg-{{ 'success' if r.status == 'published' else 'warning' if r.status == 'approved' else 'secondary' }}">{{ r.status }}</span></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-4">
+        <h5 class="mb-3">Quick Notes</h5>
+        <ul class="text-muted mb-0">
+          <li>Use the admin area to create classes, subjects, and students.</li>
+          <li>Teachers can enter scores and generate report cards automatically.</li>
+          <li>Publish completed reports before parents and students view them.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

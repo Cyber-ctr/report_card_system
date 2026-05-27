@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3 class="mb-1">Report Cards</h3>
+<p class="text-muted mb-3">Published and draft report cards.</p>
+<div class="card border-0 shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light"><tr><th>Student</th><th>Term</th><th>Year</th><th>Status</th><th>Token</th></tr></thead>
+      <tbody>
+        {% for r in reports %}
+        <tr>
+          <td>{{ r.student.first_name }} {{ r.student.last_name }}</td>
+          <td>{{ r.term }}</td>
+          <td>{{ r.academic_year }}</td>
+          <td><span class="badge text-bg-{{ 'success' if r.status == 'published' else 'warning' if r.status == 'approved' else 'secondary' }}">{{ r.status }}</span></td>
+          <td><code>{{ r.verification_token[:10] }}...</code></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

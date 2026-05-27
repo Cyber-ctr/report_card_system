@@ -1,40 +1,31 @@
-# Remote Report Card System
+# ScholaTrack
 
-A secure Flask-based report card system for secondary schools.
+ScholaTrack — Secure Academic Reporting Platform for secondary schools.
 
 ## Features
-- Role-based authentication
-- Admin management for classes, subjects, students, and users
-- Teacher score entry
-- Automatic grading
-- Printable/PDF report cards
+- Secure login with password hashing
+- Role-based access control
+- Admin management for users, classes, subjects, and students
+- Teacher score entry with automatic grading
+- Report card preview, approval, publishing, PDF export, and token verification
 - Audit logging
-- PostgreSQL-ready, SQLite by default
+- Security headers and rate limiting
+- SQLite by default, PostgreSQL-ready for production
 
 ## Quick start
-
 ```bash
 python -m venv .venv
-source .venv/bin/activate  # or .venv\Scripts\activate on Windows
 pip install -r requirements.txt
-cp .env.example .env
+copy .env.example .env
 python run.py
 ```
 
-Open `http://127.0.0.1:5000`.
-
-## Create the database
-
-The app uses SQLite automatically if `DATABASE_URL` is not set. For PostgreSQL, set it in `.env`.
-
-## Create an admin user
-
-Use the built-in CLI command:
+## Initialize the database
+For local development, the app can auto-create tables on startup when `AUTO_CREATE_DB=true`.
 
 ```bash
-flask create-admin
+flask seed-admin
 ```
 
-## Default login
-
-Create your own admin user with the command above.
+## Default admin
+Use `flask seed-admin` to create one.

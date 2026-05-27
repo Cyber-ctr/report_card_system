@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3 class="mb-1">Teacher Reports</h3>
+<p class="text-muted mb-3">Report publication workflow and verification access.</p>
+<div class="card border-0 shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light"><tr><th>Student</th><th>Term</th><th>Year</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+        {% for r in reports %}
+        <tr>
+          <td>{{ r.student.first_name }} {{ r.student.last_name }}</td>
+          <td>{{ r.term }}</td>
+          <td>{{ r.academic_year }}</td>
+          <td><span class="badge text-bg-{{ 'success' if r.status == 'published' else 'warning' if r.status == 'approved' else 'secondary' }}">{{ r.status }}</span></td>
+          <td class="d-flex gap-2 flex-wrap">
+            <form action="{{ url_for('reports.approve_report', report_id=r.id) }}" method="post">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button class="btn btn-sm btn-outline-primary" {% if r.status != 'draft' %}disabled{% endif %}>Approve</button>
+            </form>
+            <form action="{{ url_for('reports.publish_report', report_id=r.id) }}" method="post">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button class="btn btn-sm btn-primary" {% if r.status == 'published' %}disabled{% endif %}>Publish</button>
+            </form>
+            <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('reports.report_card', student_id=r.student.id) }}">View</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

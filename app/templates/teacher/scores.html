@@ -1,43 +1,68 @@
 {% extends 'base.html' %}
 {% block content %}
-<h3 class="mb-3">Score Entry</h3>
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+  <div>
+    <h3 class="mb-1">Score Entry</h3>
+    <p class="text-muted mb-0">Enter and update scores with automatic grading.</p>
+  </div>
+</div>
+
 <div class="row g-4">
-  <div class="col-lg-5">
-    <div class="card shadow">
+  <div class="col-xl-5">
+    <div class="card border-0 shadow-sm">
       <div class="card-body p-4">
+        <form method="get" class="row g-2 mb-4">
+          <div class="col-md-4">
+            <select class="form-select" name="class_id">
+              <option value="">All Classes</option>
+              {% for c in classes %}
+                <option value="{{ c.id }}" {% if class_filter == c.id %}selected{% endif %}>{{ c.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-md-4">
+            <input name="term" class="form-control" value="{{ term_filter }}" placeholder="Term">
+          </div>
+          <div class="col-md-4">
+            <input name="academic_year" class="form-control" value="{{ year_filter }}" placeholder="Academic year">
+          </div>
+          <div class="col-12"><button class="btn btn-outline-secondary w-100">Filter</button></div>
+        </form>
+
         <form method="post">
           {{ form.hidden_tag() }}
           {% for field in form if field.type not in ['CSRFTokenField', 'SubmitField'] %}
             <div class="mb-3">
               {{ field.label(class='form-label') }}
               {{ field(class='form-control') }}
-              {% if field.errors %}<div class="text-danger small">{{ field.errors[0] }}</div>{% endif %}
+              {% for error in field.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
             </div>
           {% endfor %}
-          {{ form.submit(class='btn btn-primary') }}
+          {{ form.submit(class='btn btn-primary w-100') }}
         </form>
       </div>
     </div>
   </div>
-  <div class="col-lg-7">
-    <div class="card shadow">
+
+  <div class="col-xl-7">
+    <div class="card border-0 shadow-sm">
       <div class="card-body p-4">
         <h5 class="mb-3">Recent Scores</h5>
         <div class="table-responsive">
-        <table class="table table-sm table-striped">
-          <thead><tr><th>Student</th><th>Subject</th><th>Term</th><th>Total</th><th>Grade</th></tr></thead>
-          <tbody>
-            {% for r in records %}
-            <tr>
-              <td>{{ r.student.first_name }} {{ r.student.last_name }}</td>
-              <td>{{ r.subject.name }}</td>
-              <td>{{ r.term }}</td>
-              <td>{{ r.total }}</td>
-              <td>{{ r.grade }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+          <table class="table table-hover table-sm align-middle">
+            <thead class="table-light"><tr><th>Student</th><th>Subject</th><th>Term</th><th>Total</th><th>Grade</th></tr></thead>
+            <tbody>
+              {% for r in records %}
+              <tr>
+                <td>{{ r.student.first_name }} {{ r.student.last_name }}</td>
+                <td>{{ r.subject.code }}</td>
+                <td>{{ r.term }}</td>
+                <td>{{ r.total }}</td>
+                <td><span class="badge text-bg-primary">{{ r.grade }}</span></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

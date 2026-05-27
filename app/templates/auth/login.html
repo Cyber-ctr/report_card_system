@@ -1,22 +1,40 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="row justify-content-center">
-  <div class="col-md-5">
-    <div class="card shadow">
-      <div class="card-body p-4">
-        <h3 class="mb-3">Login</h3>
-        <form method="post">
-          {{ form.hidden_tag() }}
-          <div class="mb-3">
-            {{ form.email.label(class='form-label') }}
-            {{ form.email(class='form-control') }}
-          </div>
-          <div class="mb-3">
-            {{ form.password.label(class='form-label') }}
-            {{ form.password(class='form-control') }}
-          </div>
-          {{ form.submit(class='btn btn-primary w-100') }}
-        </form>
+<div class="row justify-content-center align-items-center g-4">
+  <div class="col-lg-5">
+    <div class="hero-card p-4 p-md-5 shadow-lg">
+      <div class="badge text-bg-light mb-3">{{ app_name }}</div>
+      <h1 class="display-6 fw-bold">{{ app_tagline }}</h1>
+      <p class="text-muted">Access the administrative dashboard, score entry, and report publishing tools for {{ app_name }}.</p>
+      <form method="post" class="mt-4">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+          {{ form.email.label(class='form-label') }}
+          {{ form.email(class='form-control form-control-lg', placeholder='name@example.com') }}
+          {% for error in form.email.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+        </div>
+        <div class="mb-3">
+          {{ form.password.label(class='form-label') }}
+          {{ form.password(class='form-control form-control-lg', placeholder='Password') }}
+          {% for error in form.password.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+        </div>
+        <div class="form-check mb-3">
+          {{ form.remember_me(class='form-check-input') }}
+          {{ form.remember_me.label(class='form-check-label') }}
+        </div>
+        {{ form.submit(class='btn btn-primary btn-lg w-100') }}
+      </form>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="info-panel p-4 p-md-5">
+      <h2 class="fw-bold mb-3">Designed for reliability</h2>
+      <p class="lead mb-4">A cleaner workflow for school administration, teachers, parents, and students.</p>
+      <div class="row g-3">
+        <div class="col-md-6"><div class="feature-card h-100"><strong>Role-based access</strong><br><span class="text-muted">Only approved users see the right tools.</span></div></div>
+        <div class="col-md-6"><div class="feature-card h-100"><strong>Validated inputs</strong><br><span class="text-muted">Score limits, unique records, and safer forms.</span></div></div>
+        <div class="col-md-6"><div class="feature-card h-100"><strong>Professional reports</strong><br><span class="text-muted">PDF cards with verification tokens.</span></div></div>
+        <div class="col-md-6"><div class="feature-card h-100"><strong>Production ready</strong><br><span class="text-muted">CSRF, security headers, and rate limiting.</span></div></div>
       </div>
     </div>
   </div>

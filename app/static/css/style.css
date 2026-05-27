@@ -1,3 +1,29 @@
-body { background: #f7f8fb; }
-.card { border: 0; border-radius: 1rem; }
-.table { background: #fff; }
+:root {
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --text: #0f172a;
+}
+
+html, body { font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); }
+body { min-height: 100vh; }
+a { text-decoration: none; }
+
+.hero-card, .info-panel, .card, .metric-card, .stat-card, .feature-card, .mini-panel {
+  background: var(--card);
+  border-radius: 1.25rem;
+}
+
+.hero-card, .info-panel { border: 1px solid rgba(15, 23, 42, 0.06); }
+.feature-card, .metric-card, .stat-card, .mini-panel {
+  padding: 1rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+.metric-label, .stat-label { color: #64748b; font-size: .85rem; }
+.metric-value, .stat-value { font-size: 1.9rem; font-weight: 800; line-height: 1.1; }
+
+.report-shell {
+  background: linear-gradient(180deg, #fff, #fbfdff);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+}
+.table > :not(caption) > * > * { padding: .85rem .75rem; }

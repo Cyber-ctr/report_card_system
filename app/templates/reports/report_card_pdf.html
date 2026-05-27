@@ -3,25 +3,35 @@
 <head>
   <meta charset="utf-8">
   <style>
-    body { font-family: Arial, sans-serif; font-size: 12px; }
-    h1, h2, h3 { margin: 0; }
-    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-    th, td { border: 1px solid #333; padding: 6px; text-align: left; }
-    .meta { margin-top: 8px; }
+    body { font-family: Arial, sans-serif; font-size: 12px; color: #111; }
+    .header { border-bottom: 2px solid #111; padding-bottom: 10px; margin-bottom: 15px; }
+    .title { font-size: 20px; font-weight: bold; }
+    .muted { color: #555; }
+    table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+    th, td { border: 1px solid #444; padding: 6px; text-align: left; vertical-align: top; }
+    th { background: #f2f2f2; }
+    .summary { margin-top: 12px; }
+    .small { font-size: 11px; }
+    .token { font-family: monospace; }
   </style>
 </head>
 <body>
-  <h2>Report Card</h2>
-  <div class="meta">
-    <div><strong>Student:</strong> {{ student.first_name }} {{ student.last_name }}</div>
-    <div><strong>Admission No:</strong> {{ student.admission_number }}</div>
-    <div><strong>Class:</strong> {{ student.school_class.name }}</div>
-    <div><strong>Term:</strong> {{ term }} | <strong>Academic Year:</strong> {{ academic_year }}</div>
+  <div class="header">
+    <div class="title">{{ app_name }}</div>
+    <div class="muted">{{ app_tagline }}</div>
+    <div class="small">{{ settings.address or '' }}</div>
+    <div class="small">{{ settings.contact_email or '' }} {% if settings.contact_phone %}· {{ settings.contact_phone }}{% endif %}</div>
+  </div>
+  <div>
+    <strong>Student:</strong> {{ student.first_name }} {{ student.last_name }}<br>
+    <strong>Admission Number:</strong> {{ student.admission_number }}<br>
+    <strong>Class:</strong> {{ student.school_class.name }}<br>
+    <strong>Term:</strong> {{ term }}<br>
+    <strong>Academic Year:</strong> {{ academic_year }}<br>
+    <strong>Verification Token:</strong> <span class="token">{{ report.verification_token }}</span>
   </div>
   <table>
-    <thead>
-      <tr><th>Subject</th><th>CA</th><th>Exam</th><th>Total</th><th>Grade</th><th>Remark</th></tr>
-    </thead>
+    <thead><tr><th>Subject</th><th>CA</th><th>Exam</th><th>Total</th><th>Coefficient</th><th>Grade</th><th>Remark</th></tr></thead>
     <tbody>
       {% for s in scores %}
       <tr>
@@ -29,12 +39,16 @@
         <td>{{ s.ca_score }}</td>
         <td>{{ s.exam_score }}</td>
         <td>{{ s.total }}</td>
+        <td>{{ s.subject.coefficient }}</td>
         <td>{{ s.grade }}</td>
         <td>{{ s.remark }}</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
-  <p><strong>Total:</strong> {{ total }} | <strong>Average:</strong> {{ average }}</p>
+  <div class="summary">
+    <p><strong>Total:</strong> {{ total }} &nbsp;&nbsp; <strong>Average:</strong> {{ average }} &nbsp;&nbsp; <strong>Grade:</strong> {{ grade }}</p>
+    <p><strong>Comment:</strong> {{ report.overall_comment or remark }}</p>
+  </div>
 </body>
 </html>
