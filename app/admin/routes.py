@@ -29,7 +29,7 @@ def user_create():
             username=form.username.data.strip(),
             email=form.email.data.strip().lower(),
             role=form.role.data,
-            is_active_account=form.is_active_account.data,
+            is_active_account=True,
         )
         user.set_password(form.password.data)
         db.session.add(user)
