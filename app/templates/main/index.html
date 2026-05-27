@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-5 mb-4 bg-light rounded-3">
+  <div class="container-fluid py-5">
+    <h1 class="display-6 fw-bold">Remote Report Card System</h1>
+    <p class="col-md-8 fs-5">Secure Flask platform for secondary school report card management.</p>
+    <a class="btn btn-primary btn-lg" href="{{ url_for('auth.login') }}">Login</a>
+  </div>
+</div>
+{% endblock %}

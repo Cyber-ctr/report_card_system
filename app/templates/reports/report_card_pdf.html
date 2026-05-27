@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: Arial, sans-serif; font-size: 12px; }
+    h1, h2, h3 { margin: 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { border: 1px solid #333; padding: 6px; text-align: left; }
+    .meta { margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <h2>Report Card</h2>
+  <div class="meta">
+    <div><strong>Student:</strong> {{ student.first_name }} {{ student.last_name }}</div>
+    <div><strong>Admission No:</strong> {{ student.admission_number }}</div>
+    <div><strong>Class:</strong> {{ student.school_class.name }}</div>
+    <div><strong>Term:</strong> {{ term }} | <strong>Academic Year:</strong> {{ academic_year }}</div>
+  </div>
+  <table>
+    <thead>
+      <tr><th>Subject</th><th>CA</th><th>Exam</th><th>Total</th><th>Grade</th><th>Remark</th></tr>
+    </thead>
+    <tbody>
+      {% for s in scores %}
+      <tr>
+        <td>{{ s.subject.name }}</td>
+        <td>{{ s.ca_score }}</td>
+        <td>{{ s.exam_score }}</td>
+        <td>{{ s.total }}</td>
+        <td>{{ s.grade }}</td>
+        <td>{{ s.remark }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p><strong>Total:</strong> {{ total }} | <strong>Average:</strong> {{ average }}</p>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3>Subjects</h3>
+  <a class="btn btn-primary" href="{{ url_for('admin.subject_create') }}">Add Subject</a>
+</div>
+<table class="table table-striped">
+  <thead><tr><th>Code</th><th>Name</th></tr></thead>
+  <tbody>
+    {% for s in subjects %}
+    <tr><td>{{ s.code }}</td><td>{{ s.name }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

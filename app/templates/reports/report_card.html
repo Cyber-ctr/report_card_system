@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <h3>Report Card</h3>
+    <div>{{ student.first_name }} {{ student.last_name }} | {{ student.admission_number }}</div>
+    <div>{{ student.school_class.name }} | {{ term }} | {{ academic_year }}</div>
+  </div>
+  <a class="btn btn-outline-primary" href="{{ url_for('reports.report_card_pdf', student_id=student.id) }}">Download PDF</a>
+</div>
+
+<div class="card shadow">
+  <div class="card-body">
+    <table class="table table-bordered">
+      <thead>
+        <tr><th>Subject</th><th>CA</th><th>Exam</th><th>Total</th><th>Grade</th><th>Remark</th></tr>
+      </thead>
+      <tbody>
+        {% for s in scores %}
+        <tr>
+          <td>{{ s.subject.name }}</td>
+          <td>{{ s.ca_score }}</td>
+          <td>{{ s.exam_score }}</td>
+          <td>{{ s.total }}</td>
+          <td>{{ s.grade }}</td>
+          <td>{{ s.remark }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="mt-3">
+      <strong>Total:</strong> {{ total }} <br>
+      <strong>Average:</strong> {{ average }}
+    </div>
+  </div>
+</div>
+{% endblock %}
